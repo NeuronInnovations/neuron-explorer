@@ -18,5 +18,3 @@ src/.DS_Store
 /personal-folder/
 /.idea/
 **/.DS_Store
-src/main/resources/application-kubernetes.properties
-src/main/resources/application.properties
