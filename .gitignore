@@ -20,3 +20,4 @@ src/.DS_Store
 **/.DS_Store
 src/main/resources/application-kubernetes.properties
 src/main/resources/application.properties
+src/main/resources/application.properties
