@@ -1,4 +1,4 @@
-# explorer
+# explorer - (Work in Progress)
 
 This project uses Quarkus, the Supersonic Subatomic Java Framework.
 
