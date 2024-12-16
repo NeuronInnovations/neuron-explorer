@@ -1,0 +1,38 @@
+{#include base}
+{#sub-title}{/sub-title}
+{#body}
+
+{! variables !}
+{! countries: Map<country name, country code> !}
+{! user: the user account !}
+
+<div class="container">
+  <h1>Personal Details</h1>
+  <p>Please provide your account details below</p>
+
+  <div class="col input-field input-outlined s12">
+    <input id="first_name" type="text" class="validate" placeholder="Fred" value="">
+    <label for="first_name">First Name</label>
+  </div>
+  <div class="input-field col s12">
+    <input id="last_name" type="text" class="validate" placeholder="Flintstone" value="">
+    <label for="last_name">Last Name</label>
+  </div>
+  <div class="input-field col s12">
+    <select>
+      <option value="" disabled selected>Choose your option</option>
+      {#for name in countries.keySet}
+        <option value="{countries.get(name)}">{name}</option>
+      {/}
+    </select>
+    <label>Country of residence</label>
+  </div>
+
+  <div class="col s12">
+    <button class="btn waves-effect waves-light blue" type="submit" name="action">Create account</button>
+    <a class="btn-flat" href="">Cancel</button>
+  </div>
+</div>
+<script src="/personaldetails.js"></script>
+{/}
+{/}

@@ -1,0 +1,63 @@
+{#include base}
+{#sub-title}{/sub-title}
+{#body}
+
+  {! variables: !}
+  {! devices: the user's devices !}
+  {! referer: the current path !}
+
+  <!-- Your content here -->
+  <div class="container">
+    <h5>Device Manager</h5>
+    <p>Below is a list of devices registered to your account. Devices will only become discoverable when a service has
+    been added to the device:</p>
+
+    <table class="highlight">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Device Type</th>
+          <th>Services</th>
+          <th>Parameter</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+      {#for device in devices}
+        <tr>
+          <td>
+            <a href="/devicedetails/{device.name}">{device.name}</a>
+          </td>
+          <td>{device.deviceType}</td>
+          <td>ADSB-001</td>
+          <td>HBAR (ℏ) 1/hour</td>
+          <td>{device.registrationStatus}</td>
+        </tr>
+        {/for}
+      </tbody>
+    </table>
+
+    {#if devices.isEmpty}
+      <div class="col s12">
+        You have no active devices
+      </div>
+    {/}
+
+
+    <blockquote>
+      Warning: when you register a device, is should show as "Pending". It may take up to 60 seconds for the status to
+      be updated to "Registered". Please refresh the page to check the status
+    </blockquote>
+
+    <div style="text-align: right;">
+      <form action="/deviceregister">
+        <button class="mdc-button mdc-button--raised"   type="submit" name="action" >
+          <span class="mdc-button__ripple"></span>
+          <span class="mdc-button__label">Add device</span>
+        </button>
+      </form>
+    </div>
+  </div>
+  <script src="/devicemanager.js"></script>
+{/}
+{/}

@@ -1,0 +1,251 @@
+{#include base}
+    {#sub-title}{/sub-title}
+    {#body}
+
+        {! variables !}
+        {! user: the user account !}
+        <style>
+            .loader {
+                border: 16px solid #f3f3f3;
+                border-radius: 50%;
+                border-top: 16px solid #183a91;
+                width: 120px;
+                height: 120px;
+                -webkit-animation: spin 2s linear infinite; /* Safari */
+                animation: spin 2s linear infinite;
+            }
+
+            /* Safari */
+            @-webkit-keyframes spin {
+                0% {
+                    -webkit-transform: rotate(0deg);
+                }
+                100% {
+                    -webkit-transform: rotate(360deg);
+                }
+            }
+
+            @keyframes spin {
+                0% {
+                    transform: rotate(0deg);
+                }
+                100% {
+                    transform: rotate(360deg);
+                }
+            }
+            .scroll-pane {
+                height: 200px;
+                overflow: auto;
+                border: 1px solid #ccc;
+                padding: 10px;
+                box-sizing: border-box;
+            }
+
+            /* Custom scrollbar for WebKit browsers */
+            .scroll-pane::-webkit-scrollbar {
+                width: 10px;
+            }
+
+            .scroll-pane::-webkit-scrollbar-track {
+                background: #f1f1f1;
+            }
+
+            .scroll-pane::-webkit-scrollbar-thumb {
+                background: #888;
+            }
+
+            .scroll-pane::-webkit-scrollbar-thumb:hover {
+                background: #555;
+            }
+        </style>
+        <!-- Your content here -->
+        <div class="container" id="terms_and_conditions" {#if account.hederaAccountNumber} hidden="hidden" {/if}>
+            <h5>Neuron Explorer Terms of Service</h5>
+            <br>
+            <div class="scroll-pane">
+                    <b>1. Introduction</b>
+                    <p>Welcome to the Neuron Explorer software. By accessing or using our software, you agree to comply
+                        with and be bound by these Terms of Service ("Terms"). If you do not agree to these Terms,
+                        please do not use our software. This agreement is between you ("User") and Neuron ("Company").</p>
+
+                    <b>2. Eligibility</b>
+                    <p>Participation in the Neuron Explorer software is open to all individuals. If you are under
+                        the age of 18, you must have the consent of a parent or legal guardian to use our software.
+                        By registering, you represent and warrant that you have the necessary consent if required.</p>
+
+                    <b>3. Account Registration</b>
+                    <p>To use the Neuron Explorer software, you must register an account. During registration,
+                        you agree to provide accurate, current, and complete information and to update such information
+                        as necessary to maintain its accuracy. You are responsible for maintaining the confidentiality
+                        of your account credentials and for all activities that occur under your account.</p>
+
+                    <b>4. License Grant</b>
+                    <p>Subject to these Terms, Neuron grants you a limited, non-exclusive, non-transferable, revocable
+                        license to use the Neuron Explorer software solely for testing and evaluation purposes.</p>
+
+                    <b>5. Use of the Software</b>
+                    <p>You agree to use the Neuron Explorer software in accordance with these Terms and any
+                        guidelines or policies provided by Neuron. You shall not:</p>
+                    <ul>
+                        <li>Use the software for any unlawful purpose.</li>
+                        <li>Reverse engineer, decompile, or disassemble the software.</li>
+                        <li>Distribute, sublicense, or transfer the software to any third party.</li>
+                        <li>Use the software in any manner that could damage, disable, overburden,
+                            or impair the Neuron network.</li>
+                    </ul>
+
+                    <b>6. Feedback</b>
+                    <p>You may provide feedback, suggestions, and ideas about the software ("Feedback").
+                        By submitting Feedback, you grant Neuron a worldwide, perpetual, irrevocable,
+                        royalty-free license to use and incorporate your Feedback into the software
+                        without any obligation to compensate you.</p>
+
+                    <b>7. Data Collection and Privacy</b>
+                    <p>During your use of the Neuron Explorer software, Neuron may collect certain data related
+                        to your use of the software. This data will be used to improve the software and the
+                        overall user experience. Neuron will handle your data in accordance with its Privacy Policy.</p>
+
+                    <b>8. Service Level Agreements</b>
+                    <p>By using the Neuron Explorer software, you agree to comply with the service level agreements
+                        ("SLAs") associated with the software. The terms of these SLAs may change from time to time.
+                        Neuron will notify users of any upcoming changes to the SLAs via email. It is the
+                        responsibility of users to monitor their emails. Continued use of the software after such
+                        notifications will constitute acceptance of the new SLA terms.</p>
+
+                    <b>9. Termination</b>
+                    <p>Neuron reserves the right to terminate or suspend your access to the software at any time,
+                        with or without cause or notice. Upon termination, the license granted to you under these
+                        Terms will automatically terminate, and you must cease all use of the software.</p>
+
+                    <b>10. Disclaimers and Limitation of Liability</b>
+                    <p>The Neuron Explorer software is provided "as is" and "as available" without any warranties of
+                        any kind, express or implied. Neuron does not warrant that the software will be error-free
+                        or uninterrupted. To the fullest extent permitted by law, Neuron disclaims all warranties,
+                        express or implied, including, but not limited to, implied warranties of merchantability,
+                        fitness for a particular purpose, and non-infringement.</p>
+                    <p>In no event shall Neuron be liable for any indirect, incidental, special, consequential,
+                        or punitive damages, or any loss of profits or revenues, whether incurred directly or
+                        indirectly, or any loss of data, use, goodwill, or other intangible losses, resulting from:</p>
+                    <ul>
+                        <li>Your use of or inability to use the software.</li>
+                        <li>Any unauthorized access to or use of our servers and/or any personal information stored therein.</li>
+                        <li>Any interruption or cessation of transmission to or from our services.</li>
+                    </ul>
+
+                    <b>11. Governing Law</b>
+                    <p>These Terms shall be governed by and construed in accordance with the laws of England & Wales,
+                        without regard to its conflict of law principles. Any disputes arising under or in connection
+                        with these Terms shall be subject to the exclusive jurisdiction of the courts
+                        located in England & Wales.</p>
+
+                    <b>12. Changes to the Terms</b>
+                    <p>Neuron reserves the right to modify these Terms at any time. We will notify you of any changes
+                        by posting the new Terms on our website or through the software. Your continued use of the
+                        software after such modifications constitutes your acceptance of the new Terms.</p>
+
+                    <b>13. Contact Information</b>
+                    <p>If you have any questions about these Terms, please contact us at:</p>
+                    <p>Email: <a href="mailto:contact@neuron.world">contact@neuron.world</a></p>
+                    <p>Address: 71-75 Shelton St, London WC2H 9JQ, United Kingdom</p>
+
+                    <p>By registering for and using the Neuron Explorer software, you acknowledge that you have read,
+                        understood, and agree to be bound by these Terms of Service.</p>
+            </div>
+            <br>
+            <div class="mdc-form-field">
+                <div class="mdc-checkbox">
+                    <input type="checkbox"
+                           class="mdc-checkbox__native-control"
+                           checked="true"
+                           id="checkbox-1"/>
+                    <div class="mdc-checkbox__background">
+                        <svg class="mdc-checkbox__checkmark"
+                             viewBox="0 0 24 24">
+                            <path class="mdc-checkbox__checkmark-path"
+                                  fill="none"
+                                  d="M1.73,12.91 8.1,19.28 22.79,4.59"/>
+                        </svg>
+                        <div class="mdc-checkbox__mixedmark"></div>
+                    </div>
+                    <div class="mdc-checkbox__ripple"></div>
+                </div>
+                <label >By creating an account, you agree to the terms and conditions of service listed above</label>
+            </div>
+            <br>
+            <br>
+            <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
+                <button class="mdc-button mdc-button--raised button-large-explorer" style="background-color: #183a91"
+                        type="submit" name="action" onclick="complete()">
+                    <span class="mdc-button__ripple"></span>
+                    <span class="mdc-button__label">Complete Registration</span>
+                </button>
+            </div>
+        </div>
+        <div class="container" id="progress-bar" hidden="hidden">
+            <md-circular-progress indeterminate></md-circular-progress>
+            <h5>Setting up account</h5>
+            <h6>We are now setting up your account…this may take up to 10sec</h6>
+            <div class="container">
+                <div class="row">
+                    <div class="col s12 center-align">
+                        <div class="loader"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container" id="account-details" {#if ! account.hederaAccountNumber} hidden="hidden" {/if}>
+            <h5>Your Account Details</h5>
+            <div class="col s6">
+                <div class="input-field wide-input-explorer">
+                    <input type="text" id="first-name" name="first-name" value="{account.firstName}" readonly>
+                    <label for="first-name" class="active">First Name</label>
+                </div>
+            </div>
+            <div class="col s6">
+                <div class="input-field wide-input-explorer">
+                    <input type="text" id="last-name" name="last-name" value="{account.lastName}" readonly>
+                    <label for="last-name" class="active">Last Name</label>
+                </div>
+            </div>
+            {!<div class="col s6">
+                <div class="input-field wide-input-explorer">
+                    <input type="text" id="location" name="location" value="United Kingdom" readonly>
+                    <label for="location" class="active">Location</label>
+                </div>
+            </div>!}
+            <div class="col s6">
+                <div class="input-field wide-input-explorer">
+                    <input type="text" id="account-number" name="hederaAccountNumber"
+                           value="{account.hederaAccountNumber}" readonly>
+                    <label for="account-number" class="active">Account Number</label>
+                    <i class="material-icons prefix" onclick="copyToClipboard('account-number')">content_copy</i>
+                </div>
+            </div>
+            <div class="col s6">
+                <div class="input-field wide-input-explorer">
+                    <input type="text" id="public-key" name="accountPublicKey" value="{account.publicKey}" readonly>
+                    <label for="public-key" class="active">Public Key</label>
+                    <i class="material-icons prefix" onclick="copyToClipboard('public-key')">content_copy</i>
+                </div>
+            </div>
+            <div class="col s6">
+                <div class="input-field wide-input-explorer">
+                    <input type="text" id="private-key" name="accountPrivateKey" value="{account.privateKey}" readonly>
+                    <label for="private-key" class="active">Private Key</label>
+                    <i class="material-icons prefix" onclick="copyToClipboard('private-key')">content_copy</i>
+                </div>
+            </div>
+            <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
+                <form action="/deviceregister">
+                    <button class="mdc-button mdc-button--raised button-large-explorer"
+                            style="background-color: #183a91;" type="submit" name="action">
+                        <span class="mdc-button__ripple"></span>
+                        <span class="mdc-button__label">Add device</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+       
+        <script src="/accountdetails.js"></script>
+        {/}
+    {/}

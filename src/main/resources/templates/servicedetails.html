@@ -1,0 +1,43 @@
+{#include base}
+{#sub-title}{/sub-title}
+{#body}
+
+  {! variables !}
+
+  <!-- Your content here -->
+  <div class="container">
+    <h1>Service Details</h1>
+    <p>Please find the details for your "Bob" device below:</p>
+  
+      <div class="row">
+        <div class="input-field wide-input-explorer">
+          <input id="name" type="text" value="{deviceName}" readonly>
+          <label for="name">Linked Device</label>
+        </div>
+        <div class="input-field wide-input-explorer">
+          {! ask @james what the download icon should do !}
+          <input id="device_role" type="text" value="{service.service.name}" readonly>
+          <label for="device_role">Service</label>
+        </div>
+        <div class="input-field wide-input-explorer">
+          {! ask @james what the download icon should do !}
+          <input id="device_role" type="text" value="{service.fee}" readonly>
+          <label for="device_role">Amount</label>
+        </div>
+      </div>
+
+      {! for now let's hardcode the parameters !}
+
+      <div class="row">
+        <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
+          <a href="/devicedetails/{deviceName}" class="mdc-button mdc-button--raised wide-input-explorer-small" style="background-color: #183a91;" >
+            <span class="mdc-button__ripple"></span>
+            <span class="mdc-button__label">Ok</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="/servicedetails.js"></script>
+{/}
+{/}

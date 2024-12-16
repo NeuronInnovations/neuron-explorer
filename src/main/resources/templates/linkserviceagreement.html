@@ -1,0 +1,172 @@
+{#include base}
+{#sub-title}{/sub-title}
+{#body}
+
+{! variables !}
+{! services : the available services for this device. !}
+
+<div id="link_service_agreement" class="container">
+  <h5>Link Service Agreement</h5>
+  <div class="wide-input-explorer">
+    For a device to be discoverable on the network, it must have at least one service agreement linked to the account.
+      This is a contract between you and the customer. Please select a service agreement to get started. You can also
+      download a copy of the agreement:
+  </div>
+  <br>
+  <div class="row">
+    <div class="input-field wide-input-explorer">
+      <select id="select_service" onchange="selectService()">
+        {#for service in services}
+          <option value="{service.name}">{service.name}</option>
+        {/for}
+      </select>
+      <label>Service</label>
+    </div>
+      <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
+          <a href="/files/AS001.pdf" download="Service Level Agreement - AS001" class="mdc-button mdc-button--outlined wide-input-explorer-small" style="color: #183a91;" >
+              <span class="mdc-button__ripple"></span>
+              <span class="mdc-button__label">Download</span>
+          </a>
+      </div>
+  </div>
+
+    <br>
+  {!<div class="wide-input-explorer">
+    <span>DESCRIPTION:&nbsp;</span>!}
+    {! @TODO: update the description based on the selected service !}
+    {!<span id="description">
+      ADSB-002 provides 4dsky.com with all data collected from
+      your ADS-B sensor plus high precision GPS timing for accurate time of
+      arrival information. Data is transmitted in BEAST format. Each day, 100,000
+      NRN tokens will be distributed across all active devices.
+    </span>
+  </div>!}
+
+{!  <div class="col s12">
+    <button onclick="next('agreement')" class="btn waves-effect waves-light blue" type="submit" name="action">Next</button>
+    <a class="btn waves-effect waves-light" href="/devicedetails/{deviceName}">Back</a>
+  </div>!}
+    <div style="display: flex; justify-content: space-between;">
+        <!-- MDC Web Button styled as a flat button for "Back" -->
+        <a href="/devicedetails/{deviceName}" class="mdc-button mdc-button--outlined wide-input-explorer-small" style="color: #183a91;" >
+            <span class="mdc-button__ripple"></span>
+            <span class="mdc-button__label">Back</span>
+        </a>
+        <!-- MDC Web Button for "Next" -->
+        <button class="mdc-button mdc-button--raised wide-input-explorer-small" style="background-color: #183a91;"  type="submit" name="action" onclick="next('agreement')">
+            <span class="mdc-button__ripple"></span>
+            <span class="mdc-button__label">Next</span>
+        </button>
+    </div>
+</div>
+<div hidden="hidden" id="select_service_parameters" class="container">
+    <h5>Select Service Parameters</h5>
+    <div class="wide-input-explorer">
+      {! we somehow need to hardcode the service parameters for now. Based on the selected service !}
+      Within the service level agreement, there is 1 parameter that is currently fixed. This may become user selectable
+        in the future:
+    </div>
+
+    <div class="col s12">
+        <div class="input-field wide-input-explorer">
+            <span class="currency-symbol">HBAR (ℏ)</span>
+            <input class="currency-input" type="number" min="0.00" step="0.01" id="select_amount" disabled="disabled" value="1" onchange="addAmount(this.value)" name="amount">
+            {!<label for="select_amount" class="active">amount</label>!}
+        </div>
+    </div>
+{!    <div class="row">
+      <div class="s12">ask for parameters here</div>
+    </div>!}
+
+{!    <div class="red-text wide-input-explorer">
+        <blockquote>
+      Note: You can change this parameter at any time. If you are new to this,
+      we recommend keeping the default parameter value initially.
+        </blockquote>
+    </div>!}
+
+    <div style="display: flex; justify-content: space-between;">
+        <!-- MDC Web Button styled as a flat button for "Back" -->
+        <a onclick="back('parameters')" class="mdc-button mdc-button--outlined wide-input-explorer-small" style="color: #183a91;" >
+            <span class="mdc-button__ripple"></span>
+            <span class="mdc-button__label">Back</span>
+        </a>
+        <!-- MDC Web Button for "Next" -->
+        <button class="mdc-button mdc-button--raised wide-input-explorer-small" style="background-color: #183a91;"  type="submit" name="action" onclick="next('parameters')">
+            <span class="mdc-button__ripple"></span>
+            <span class="mdc-button__label">Next</span>
+        </button>
+    </div>
+  </div>
+    <div hidden="hidden" id="service-details" class="container">
+        <h5>Service Details</h5>
+        <p>Please find the details for your "{deviceName}" device below:</p>
+        <br>
+        <div class="row">
+            <div class="input-field wide-input-explorer">
+                <input id="name" type="text" value="{deviceName}" readonly>
+                <label for="name">Linked Device</label>
+            </div>
+            <div class="input-field wide-input-explorer">
+                {! ask @james what the download icon should do !}
+                <input id="service_name" type="text" value="Service" readonly>
+                <label for="service_name">Service</label>
+            </div>
+            <div class="input-field wide-input-explorer">
+                {! ask @james what the download icon should do !}
+                <input id="service_amount" type="text" value="1" readonly>
+                <label for="service_amount">Amount</label>
+            </div>
+        </div>
+
+        {! for now let's hardcode the parameters !}
+
+        <div style="display: flex; justify-content: space-between;">
+            
+            <div>
+                <!-- MDC Web Button styled as a flat button for "Back" -->
+                <a onclick="back('details')" class="mdc-button mdc-button--outlined wide-input-explorer-small-half" style="color: #183a91;" >
+                    <span class="mdc-button__ripple"></span>
+                    <span class="mdc-button__label">Edit</span>
+                </a>
+                <a href="/devicedetails/{deviceName}" class="mdc-button mdc-button--outlined wide-input-explorer-small-half" style="color: #D32F2F;" >
+                    <span class="mdc-button__ripple"></span>
+                    <span style="color: #D32F2F;" class="mdc-button__label">Cancel</span>
+                </a>
+            </div>  
+
+
+            <!-- MDC Web Button for "Next" -->
+            <button class="mdc-button mdc-button--raised wide-input-explorer-small" style="background-color: #183a91;"  type="submit" name="action" onclick="registerService('{deviceName}')">
+                <span class="mdc-button__ripple"></span>
+                <span class="mdc-button__label">Next</span>
+            </button>
+
+        </div>
+{!        <div class="row">
+            <div class="col s12">
+                <button class="btn waves-effect waves-light" type="submit" name="action" onclick="registerService('{deviceName}')">OK</button>
+                <a class="btn waves-effect waves-light" onclick="back('details')">Edit</a>
+                <a class="btn waves-effect waves-light red" href="/devicedetails/{deviceName}">Cancel</a>
+            </div>
+        </div>!}
+    </div>
+    <style>
+        .input-field .currency-symbol {
+            position: absolute;
+            text-align: center;
+            top: 0;
+            left: 0;
+            padding: 12px;
+            pointer-events: none;
+            font-size: 14px;
+            color: #9e9e9e;
+        }
+        .input-field input[type=number].currency-input {
+            padding-left: 100px;
+            width: 420px;
+        }
+    </style>
+<script src="/linkserviceagreement.js"></script>
+{/}
+{/}

@@ -1,0 +1,168 @@
+{#include base}
+{#sub-title}{/sub-title}
+{#body}
+
+{! variables !}
+{! device: the device !}
+<style>
+    .loading-animation {
+        display: none; /* Hidden by default */
+        border: 16px solid #f3f3f3; /* Light grey */
+        border-top: 16px solid #3498db; /* Blue */
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        animation: spin 2s linear infinite;
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+</style>
+
+<!-- Your content here -->
+<div class="container">
+    <h5>Device Details</h5>
+    <div class="wide-input-explorer">
+        <p>Please find the details for your device below:</p>
+    </div>
+    <br>
+    <div class="row">
+        <div class="input-field wide-input-explorer">
+            <input id="name" type="text" value="{device.name}" readonly>
+            <label for="name">Name</label>
+        </div>
+        <div class="input-field wide-input-explorer">
+            <input id="device_role" type="text"
+                value="{#if device.deviceRole == DeviceRole:PROVIDER}Service Provider{#else}Service Consumer{/if}"
+                readonly>
+            <label for="device_role">Device Role</label>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="input-field wide-input-explorer">
+            <input id="device_type" type="text" value="{device.deviceType}" readonly>
+            <label for="device_type">Device Type</label>
+        </div>
+    </div>
+
+    <div {#if !device.hederaAccountNumber}hidden="hidden" {/if} class="row">
+        <div class="input-field wide-input-explorer">
+            <input id="device-id" type="text" value="{device.hederaAccountNumber}" readonly>
+            <label for="device-id">Device Account ID</label>
+            <i class="material-icons prefix" onclick="copyToClipboard('device-id')">content_copy</i>
+        </div>
+    </div>
+    <div class="row">
+        <div class="input-field wide-input-explorer">
+            <input id="device-key" type="text" value="{device.privateKey}" readonly>
+            <label for="device-key">Device Private Key</label>
+            <i class="material-icons prefix" onclick="copyToClipboard('device-key')">content_copy</i>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="wide-input-explorer">
+            <blockquote>
+                Note: Your device key must be inserted into the device you are registering. Please follow the
+                instructions provided by the manufacturer or software provider.
+            </blockquote>
+            <blockquote>
+                Note: You must add a service to your device before it will connect to the Neuron network.
+            </blockquote>
+        </div>
+    </div>
+
+    <table class="highlight wide-input-explorer">
+        <thead>
+            <tr>
+                <th>Services</th>
+                <th>Parameters</th>
+                <th>Service Status</th>
+                <th>Service State</th>
+            </tr>
+        </thead>
+        <tbody>
+            {#for service in services}
+            <tr>
+                <td>
+                    <a href="/servicedetails/{service.id}/{device.name}">
+                        {service.service.name}
+                    </a>
+                </td>
+                <td>ℏ {service.fee}/hour</td>
+                <td>{service.status}</td>
+                <td>{service.serviceState}</td>
+            </tr>
+            {/for}
+        </tbody>
+    </table>
+    <div class="row" style="text-align: right;">
+        <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
+            <a  
+                class="mdc-button mdc-button--raised wide-input-explorer-small-half" 
+                {#if services.size() == 0}
+                href="/linkserviceagreement/{device.name}"
+                style="background-color: #131D45; margin-top:16px;" 
+                {#else} 
+                href="javascript:alert('We are restricted to one service for the time being - watch this space for updates!')"
+                
+                style="background-color: #ccc; margin-top:16px;" 
+                {/if}
+                 >
+                <span class="mdc-button__ripple"></span>
+                <span class="mdc-button__label">Add Service</span>
+            </a>
+        </div>
+    </div>
+
+
+
+    <div style="display: flex; justify-content: space-between; ">
+        <div>
+            <a href="/devicemanager" class="mdc-button mdc-button--raised" style="color: #183a91;">
+                <span class="mdc-button__ripple"></span>
+                <i class="material-icons mdc-button--icon">arrow_back</i>
+
+            </a>
+
+            <a class="mdc-button mdc-button--outlined" type="submit" name="action" onclick="deleteDevice('{device.name}')">
+                <span class="mdc-button__ripple"></span>
+                <i class="material-icons mdc-button--icon" style="color: #D32F2F;">delete</i>
+            </a>
+        </div>
+
+        {#if device.registrationStatus == DeviceRegistrationStatus:PENDING || device.registrationStatus == DeviceRegistrationStatus:REGISTERED || services.orEmpty.size == 0}      
+        <a class="mdc-button mdc-button--outlined disabled"
+            type="submit" name="action"
+            onclick="alert('Please add a service bofore registering')" >
+            <span class="mdc-button__ripple"></span>
+            <span class="mdc-button__label" style="white-space: nowrap">Register Device</span>
+        </a>
+        
+        {#else}
+        
+        <a id="createdevicefinalandwaitbutton"
+            class="mdc-button mdc-button--raised"
+            type="submit" name="action"
+            onclick="registerDeviceFinal('{device.name}')" >
+            <span class="mdc-button__ripple"></span>
+            <span class="mdc-button__label" style="white-space: nowrap">Register Device</span>
+        </a>
+        <div id="loadingAnimation" class="loading-animation"></div>
+        {/if}
+
+
+    </div>
+    <br/>
+    <br/>
+    
+
+
+</div>
+
+<script src="/devicedetails.js"></script>
+{/}
+{/}

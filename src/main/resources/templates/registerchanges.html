@@ -1,0 +1,60 @@
+{#include base}
+{#sub-title}{/sub-title}
+{#body}
+
+{! variables !}
+{! user: the user !}
+{! devices !}
+
+<div class="container">
+  <h1>Register Changes</h1>
+  {! replace the hardcoded account which the user's hedera account !}
+  <div class="col s12">You are about to register the below services on the Neuron network under account 0.0.123456.
+    Please review these changes and confirm below. By registering these changes, yoru account key will be used to sign
+    the changes on the Hedera network.
+  </div>
+
+  {! hmmmm, maybe we should use div and row/col? !}
+  <table class="highlight">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Device Type</th>
+        <th>Services</th>
+        <th>Parameter</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Bob</td>    {! link to the device details !}
+        <td>Jetvision Airsquitter</td>
+        <td>ADSB-001</td> {! link to the service !}
+        <td>$0.50/hour</td>
+        <td>Unregistered</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td></td>
+        <td>ADSB-002</td>
+        <td></td>
+        <td>Unregistered</td>
+      </tr>
+   </tbody>
+  </table>
+
+  <div class="col s12">
+    <input type="checkbox" id="confirm">
+    <label for="confirm">By clicking “Register Changes”, I confirm that I wish to register the above changes
+      to my devices and services and agree to the terms of service contained in each service agreement/s with
+      the parameters defined above. Once confirmed, your service will become active.</label>
+  </div>
+
+  <div class="col s12">
+      <button class="btn waves-effect waves-light blue" type="submit" name="action">Register changes</button>
+      <a class="btn-flat" href="">Cancel</button>
+  </div>
+</div>
+<script src="/registerchanges.js"></script>
+{/}
+{/}

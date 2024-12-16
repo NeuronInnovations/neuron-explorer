@@ -1,0 +1,151 @@
+{#include base}
+    {#sub-title}{/sub-title}
+    {#body}
+
+
+        <style>
+            .loading-animation {
+                display: none; /* Hidden by default */
+                border: 16px solid #f3f3f3; /* Light grey */
+                border-top: 16px solid #3498db; /* Blue */
+                border-radius: 50%;
+                width: 30px;
+                height: 30px;
+                animation: spin 2s linear infinite;
+            }
+
+            @keyframes spin {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+            }
+        </style>
+
+        {!device name container!}
+
+
+
+
+        <div id="device_name" class="container">
+            <h5>Device Name</h5>
+            <div class="col s6 wide-input-explorer">
+                <p>Please give your device a name to help you distinguish between your devices. This may be the serial
+                    number of the device, or just a nickname you choose.</p>
+            </div>
+            <br>
+            <div class="col s6">
+                <div class="input-field wide-input-explorer">
+                    <input id="device_name_input" type="text" class="validate" placeholder="name">
+                    <label for="device_name">Device Name</label>
+                </div>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+                <!-- MDC Web Button styled as a flat button for "Back" -->
+                <a href="devicemanager" class="mdc-button mdc-button--outlined wide-input-explorer-small"
+                   style="color: #183a91;">
+                    <span class="mdc-button__ripple"></span>
+                    <span class="mdc-button__label">Back</span>
+                </a>
+                <!-- MDC Web Button for "Next" -->
+                <button class="mdc-button mdc-button--raised wide-input-explorer-small"
+                        style="background-color: #183a91;" type="submit" name="action" onclick="addName()">
+                    <span class="mdc-button__ripple"></span>
+                    <span class="mdc-button__label">Next</span>
+                </button>
+
+            </div>
+        </div>
+        <!-- device role -->
+        <div hidden="hidden" id="device_role" class="container">
+            <h5>Device Role</h5>
+            <div class="col s6 wide-input-explorer">
+                <p>
+
+                    Please choose a role for the device. Choose "service provider" if the device is providing a service to others on the network (e.g. a flight tracking sensor), or choose "customer" if you are wanting to receive services from other devices on the network (e.g. a 4dsky software application).
+
+
+
+
+
+                </p>
+            </div>
+            <div class="row wide-input-explorer" style="display: flex;
+                                                    flex-direction: row;
+                                                    flex-wrap: nowrap;
+                                                    justify-content: center;
+                                                    align-items: flex-start;
+                                                    column-gap: 15px;;
+                                                    " >
+                <div class="mdc-button mdc-button--raised "  onclick="selectDeviceType('PROVIDER')"      
+                style="display: flex;
+                flex-direction: column;
+                align-content: center;
+                height: 100%; ">
+                    <h7>Service Provider </h7>
+                    <p style="font-size: x-small">Select this option if your device is providing a service. E.g. an ADS-B flight tracking service</p>
+                </div>
+                <div class="mdc-button mdc-button--outlined " onclick="selectDeviceType('CONSUMER')"
+                style="display: flex;
+                flex-direction: column;
+                align-content: center;
+                height: 100%; ">
+                    <h7>Customer  </h7>
+                    <p style="font-size: x-small">Select this option if your device is consuming services from the Neuron network</p>        
+                </div>
+            </div>
+            <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
+                <a onclick="backToName()" class="mdc-button mdc-button--outlined wide-input-explorer-small"
+                   style="color: #183a91;">
+                    <span class="mdc-button__ripple"></span>
+                    <span class="mdc-button__label">Back</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- device selector -->
+        <div id="device_selector" hidden="hidden" class="container">
+            <h5>Select Your Device</h5>
+            <div class="wide-input-explorer">
+                <p>Only devices with a valid service agreement can be registered on the Neuron network. Below are a list
+                    of
+                    devices with a valid service agreement. Please select your device from the dropdown list below:</p>
+            </div>
+            <br>
+            <div id="device_selector_consumer" class="input-field wide-input-explorer">
+                <select id="device_select_consumer" onchange="addDeviceType('CONSUMER')">
+                    <option value="" disabled selected>Choose your device</option>
+                    <option value="ADSB-consumer">Cloud Server</option>
+                </select>
+                <label>Device</label>
+            </div>
+            <div id="device_selector_provider" class="input-field wide-input-explorer">
+                <select id="device_select_provider" onchange="addDeviceType('PROVIDER')">
+                    <option value="" disabled selected>Choose your device</option>
+                    <option value="Jetvision Airsquitter">Jetvision Airsquitter</option>
+                    <option value="uAvionics">uAvionics Pingstation 3</option>
+                </select>
+                <label>Device</label>
+            </div>
+            <div class="wide-input-explorer">
+                <p>If you wish to register a device that isn't featured on this list, you will first need to create a
+                    service agreement. Please <a href="contact@neuron.world">contact us</a> for assistance.</p>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+
+                <!-- MDC Web Button styled as a flat button for "Back" -->
+                <a onclick="backToName()" class="mdc-button mdc-button--outlined wide-input-explorer-small" style="color: #183a91;">
+                    <span class="mdc-button__ripple"></span>
+                    <span class="mdc-button__label">Back</span>
+                </a>
+                <!-- MDC Web Button for "Next" -->
+                <button id="createdeviceandwaitbutton" class="mdc-button mdc-button--raised wide-input-explorer-small" style="background-color: #183a91;" type="submit"
+                        name="action" onclick="createDevice()">
+                    <span class="mdc-button__ripple"></span>
+                    <span class="mdc-button__label">Create device</span>
+                </button>
+                <div id="loadingAnimation" class="loading-animation"></div>
+            </div>
+        </div>
+
+        <script src="/deviceregister.js"></script>
+        {/}
+    {/}

@@ -1,0 +1,30 @@
+{#include base}
+{#sub-title}{/sub-title}
+{#body}
+
+{! variables !}
+
+<div class="container">
+  <h1>Select Service Parameters</h1>
+  <div class="col s12">
+    {! we somehow need to hardcode the service parameters for now. Based on the selected service !}
+    Within the ADSB-001 service agreement, there is 1 parameter that is user selectable. Please select this parameter below:
+  </div>
+
+  <div class="row">
+    <div class="s12">ask for parameters here</div>
+  </div>
+
+  <div class="col s12 red-text">
+    Note: You can change this parameter at any time. If you are new to this,
+    we recommend keeping the default parameter value initially.
+  </div>
+
+  <div class="col s12">
+    <button class="btn waves-effect waves-light blue" type="submit" name="action">Next</button>
+    <a class="btn waves-effect waves-light" href="">Back</a>
+  </div>
+</div>
+<script src="/selectserviceparameters.js"></script>
+{/}
+{/}

@@ -1,0 +1,399 @@
+{#include base}
+{#sub-title}{/sub-title}
+{#body}
+
+<!-- deck.gl standalone bundle -->
+<script src="deck.dist.min.js"></script>
+<!-- Mapbox dependencies -->
+<script src="https://api.tiles.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.js"></script>
+<link href="https://api.tiles.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/s2-geometry@1.2.10/src/s2geometry.min.js"></script>
+<style type="text/css">
+
+
+    #container {
+        position: inherit !important;
+        width: 100vw;
+        height: 100vw;
+    }
+
+    .info-region-title {
+        font-size: 15px;
+        color: white;
+        margin-top: 0px;
+        text-transform: uppercase;
+    }
+
+    #right-info-panel,
+    #right-info-panel-back {
+  
+        min-width: 332px;
+        max-width: 462px;
+        left: 0px;
+        position: absolute;
+        top: 0px;
+        right:0px;
+        overflow-x: scroll;
+
+        opacity: 0.8;
+        padding: 32px;
+        height: 100%;
+        background-color:var(--mdc-theme-primary);
+        color: white;
+        border-color: #ffffff;
+        border-width: 4px;
+        box-shadow: 0px 2px 44px 0px rgba(241, 241, 241, 0.31);
+        transition: border 300ms ease 0ms, box-shadow 300ms ease 0ms;
+    }
+
+    #showmapbutton {
+        visibility: hidden;
+    }
+
+    /* Styles for mobile devices */
+    @media (max-width: 882px) { /* Adjust 600px to the appropriate mobile breakpoint */
+        #right-info-panel,
+        #right-info-panel-back {
+            max-width: 100%;
+            padding: 8px;
+        }
+
+        #showmapbutton {
+            visibility: visible;
+        }
+    }
+
+
+    #right-info-panel {
+        border-right-style: solid;
+    }
+
+    #right-info-panel-back {
+        border-left-style: solid;
+    }
+
+    #layer-selector-panel {
+        right: 80px;
+        position: absolute;
+        top: 50%;
+        right: 24px;
+        transform: translate(-0%, -44%);
+        width: 0px
+    }
+
+    .layer-selector {
+        margin: 15px;
+        padding: 0px;
+        width: 45px;
+        height: 45px;
+        background-color:var(--mdc-theme-primary);
+        color: #acbcd2;
+        border-radius: 100px;
+        box-shadow: 0 0 6px 2px #183a91;
+        background-size: cover;
+        background-origin: content-box;
+        background-repeat: no-repeat;
+    }
+
+    .layer-selector:hover {
+        box-shadow: 0 0 6px 2px rgb(0 230 255 / 31%), inset 0 0 6px 2px rgb(0 230 255 / 31%);
+
+    }
+
+    .layer-selector.enabled {
+        box-shadow: 0 0 6px 2px rgb(0 230 255 / 31%), inset 0 0 6px 2px rgb(0 230 255 / 31%);
+
+    }
+
+    .button-blue {
+        border: solid 1px #59abff;
+        color: white !important;
+    }
+
+    .button-orange {
+        border: solid 1px rgb(0, 0, 0);
+        color: white !important;
+        background-color: darkgoldenrod !important;
+    }
+
+    strong {
+        color: white;
+    }
+
+    h1 {
+        font-size: 32px;
+        color: white;
+    }
+
+    h2 {
+        font-size: 24px;
+        color: white;
+    }
+
+    td {
+        padding: 0px;
+    }
+    th {
+        padding: 0px;
+    }
+
+
+    .home-top-bar-fix {
+        background: none;
+        z-index: 7; 
+    }
+</style>
+
+
+<div id="container"></div>
+<div id="layer-selector-panel" style="display: none;">
+    <!--    <div id="sensor-arc-layer" class="layer-selector" style='background-image: url(images/b1.png)'
+        onclick="addRemoveSensorArcLayer()"></div>
+    <div id="ground-track-layer" class="layer-selector" style='background-image: url(images/b2.png)'
+        onclick="addRemoveGroundTrackLayer()"></div>
+        
+
+    <div id="coverage-layer" class="layer-selector" style='background-image: url(images/b3.png)'
+        onclick="addRemoveCoverageLayer()"></div>
+        -->
+    <div class="layer-selector" style='background-image: url(images/2d.png)' onclick="toPitchZero()"></div>
+    <div class="layer-selector" style='background-image: url(images/3d.png)' onclick="toPitchNinety()"></div>
+    <div class="layer-selector" style='background-image: url(images/rotate.png)' onclick="rotateThirdy()"></div>
+</div>
+
+<div id="right-info-panel-back"  class="paddingbox" style="color:white;
+        
+        backface-visibility: hidden;
+        scroll-behavior: smooth;
+        transition: transform 0.6s;
+        transform-style: preserve-3d;
+        transform:rotateY('180deg');">
+    <div style="display:flex; flex-direction: row; align-items: center; justify-content: space-between;">
+      
+            <div style="margin:16px 0px" class="mdc-button button-blue" onclick="flipCard('front')">back</div>
+            <div style="text-align: right">
+                <img src="images/neuronLogo.png" style='margin: 16px 0px; width: 145px;'  />
+            </div>
+            <!--
+            <div style="text-align: right">
+                <img src="images/s-logo.svg" alt="" width="100" height="100" style='margin: -30px 32px' />
+            </div>
+            -->
+    </div>
+    
+    <h1><span class="descr"> Peer </span> <strong id="ethPeerAddressShort">0x???...???</strong></h1>
+
+    <div>
+        <em class="descr">EVM address:</em><br />
+        <strong id="ethPeerAddress" style="color:white; font-size: 14px; word-wrap: break-word;">0x????...????</strong>
+        <br /><br />
+        <a id="explorerButton" target="_blank" class="mdc-button ">View in HashScan</a>
+        <!--<a id="openInDialerButton" class="mdc-button mdc-button--raised ">Dial (and standup a node)</a>-->
+
+    </div>
+    <br /><br /><br />
+
+    <br/>
+
+    <div style="display: flex;justify-content: space-between; flex-wrap: wrap; gap: 16px;">
+        <div style="width:100%; border: 2px dashed #e6e6e6;border-radius: 33px; padding: 8px;">
+            <div
+                    style="height:75px; flex-direction: column; display: flex;align-items: center; justify-content: space-evenly;border-radius: 22px; padding: 8px; background-image: url('images/pattern.png');background-size: 40% ">
+                <div style="font-size: 16px;">Balance (hbar)</div>
+                <div  style="font-size: 32px;"><span id="hbarBalance">00.0</span></div>
+            </div>
+
+        </div>
+    </div>
+
+    <br />
+    <div style="display:grid; grid-template-columns: auto auto ; grid-gap: 16px;    ">
+        <div style=" border: 2px dashed #ffffff;border-radius: 33px; padding: 8px;">
+            <div
+                style="height:75px; flex-direction: column; display: flex;align-items: center; justify-content: space-evenly;border-radius: 22px; padding: 8px; background-image: url('images/pattern.png');background-size: 40% ">
+                <div style="font-size: 16px;">Connections</div>
+                <div id="connections" style="font-size: 32px; padding: 16px;">????</div>
+            </div>
+
+        </div>
+
+        <div style="border: 2px dashed #dadada; border-radius: 33px; padding: 8px;">
+            <div
+                style="height:75px; flex-direction: column; display: flex;align-items: center; justify-content: space-evenly;border-radius: 22px; padding: 8px; background-image: url('images/pattern.png');background-size: 40% ">
+                <div style="font-size: 16px;">Heartbeat</div>
+                <div style="font-size: 32px; padding: 16px;"><span id="lastSeen"></span></div>
+            </div>
+        </div>
+
+    </div>
+    <br />
+    <br />
+    <br />
+
+
+    <div style=" border-radius:20px; border:#ebebeb 2px dashed; padding:16px;">
+        <h4 class="info-region-title">Heartbeat</h4>
+        <div style="display: flex; flex-direction: row; align-items: center;justify-content: space-between;">
+            <div>
+                <em class="descr">Standard Output Topic</em>
+                <br />
+                <strong id="stdOutTopic" style="color:white; font-size: 16px;">0.0.????</strong>
+            </div>
+            <a id="stdOutTopicLink" target="_blank" class="mdc-button mdc-button--raised mdc-button button-blue">
+                HashScan
+            </a>
+        </div>
+        
+        <div style="margin:16px 0px; display:grid; grid-template-columns: auto auto; grid-gap: 4px">
+            <em class="descr">Last heartbeat</em>
+            <div id="lastHeartbeat" style="text-align: right;"> ???????.???? </div>
+            <em class="descr">Last dialability</em>
+            <div id="connectivityInfo" style="text-align: right;"> ??? </div>
+            <em class="descr">Version </em>
+            <div id="sdkVersion" style="text-align: right;"> ??? </div>
+            <em class="descr">Service </em>
+            <div id="serviceInfo" style="text-align: right;"> ADSB-001-Producer / Consumer</div>
+            <em class="descr">Number of heartbeats </em>
+            <div id="numberOfHeartbeats" style="text-align: right;"> ??? </div>
+        </div>
+    </div>
+
+
+
+    <br />
+    <br />
+    <br />
+    
+
+    <div style=" border-radius:20px; border:#d0d0d0 2px dashed; padding:16px;">
+        <h4 class="info-region-title descr">Requests received for services </h4>
+        <div style="display: flex; flex-direction: row; align-items: center;justify-content: space-between;">
+            <div>
+                <em class="descr">Standard Input Topic</em>
+                <br />
+                <strong id="stdInTopic" style="color:white; font-size: 16px;">0.0.????</strong>
+            </div>
+            <a id="stdInTopicLink" target="_blank" class="mdc-button mdc-button--raised mdc-button button-blue ">
+                HashScan
+            </a>
+        </div>
+        <table style="margin-top: 16px;">
+            <tr>
+                <th class="descr">PeerID</th>
+                <th class="descr">Shared Account</th>
+                <th class="descr">Last Request Time</th>
+            </tr>
+            <tbody id="latestStdInMessages"></tbody>
+        </table>
+        <div style="margin:16px 0px; display:grid; grid-template-columns: auto auto; grid-gap: 4px">
+            <em class="descr">Number of requests </em>
+            <div id="numberOfRequests" style="text-align: right;"> ??? </div>
+        </div>
+    </div>
+
+
+</div>
+
+<div id="right-info-panel" class="paddingbox" style="   
+        backface-visibility: hidden;
+        scroll-behavior: smooth;
+        background-color:var(--mdc-theme-primary);
+        transition: transform 0.6s;
+        transform-style: preserve-3d;
+        transform:rotateY('0deg');
+    ">
+    
+    <div style="display: flex; align-items: center; justify-content: space-between;">
+        <div style="display: flex; align-items: center;">
+            <img src="images/neuronLogo.png" style="margin: 16px 0px; width: 145px;" />
+            <span style="height: 32px; font-size: 22px; font-family: Roboto; font-weight: 200; transform: translate(3px, 7px);">Explorer</span>
+        </div>
+        <button id="showmapbutton" onclick="showMap()" class="mdc-button mdc-button--raised mdc-button--icon-leading">
+            <div class="mdc-button__ripple"></div>
+            <i class="material-icons mdc-button--icon" aria-hidden="true">map</i>
+        </button>
+    </div>
+
+    <div style="position: relative;
+        top:100px;
+        height: 90px;
+        font-family: 'Sora', sans-serif;
+        font-style: normal;
+        font-weight: 400;
+        color: #FFFFFF;">
+        <div style=" line-height: 39px; font-size: 32px;">
+            Welcome to the Neuron<br />
+            <strong style="color: white">Network Explorer</strong>
+        </div>
+
+        <hr />
+        <p>This is a testnet Explorer for the Neuron Network providing registration and discovery tools for users of the Neuron Network</p>
+
+        <br />
+        <div style="display: flex;justify-content: space-between; flex-wrap: wrap; gap: 16px;">
+            <div style="width:100%; border: 2px dashed #e6e6e6;border-radius: 33px; padding: 8px;">
+                <div
+                    style="height:95px; flex-direction: column; display: flex;align-items: center; justify-content: space-evenly;border-radius: 22px; padding: 8px; background-image: url('images/pattern.png');background-size: 40% ">
+                    <div style="font-size: 16px;">Value exchanged (hBar) </div>
+                    <div style="font-size: 44px;">00000.0 <small style="font-size: 16px;"> $00.00</small></div>
+                </div>
+
+            </div>
+        </div>
+
+        <div style=" line-height: 24px; font-size: 24px; margin-top: 33px;">
+            Network stats
+        </div>
+        <hr />
+        <br/>
+
+        <div style="display: flex;justify-content: space-between; flex-wrap: wrap; gap: 16px;">
+            <div style="width:100%; border: 2px dashed #e6e6e6;border-radius: 33px; padding: 8px;">
+                <div
+                        style="height:75px; flex-direction: column; display: flex;align-items: center; justify-content: space-evenly;border-radius: 22px; padding: 8px; background-image: url('images/pattern.png');background-size: 40% ">
+                    <div style="font-size: 16px;">Total TXs </div>
+                    <div  style="font-size: 44px;"><span id="total-txs">00000.0</span></div>
+                </div>
+
+            </div>
+        </div>
+
+        <br />
+        <br/>
+
+        <div style="display:grid; grid-template-columns: auto auto ; grid-gap: 16px;">
+            <div style=" border: 2px dashed #e4e4e4;border-radius: 33px; padding: 8px;">
+                <div
+                    style="height:75px; flex-direction: column; display: flex;align-items: center; justify-content: space-evenly;border-radius: 22px; padding: 8px; background-image: url('images/pattern.png');background-size: 40% ">
+                    <div style="font-size: 16px;">Active Services</div>
+                    <div id="trackedDiv" style="font-size: 33px; ">TBA
+                    </div>
+                </div>
+            </div>
+
+            <div style="border: 2px dashed #e9e9e9;border-radius: 33px; padding: 8px;">
+                <div
+                    style="height:75px; flex-direction: column; display: flex;align-items: center; justify-content: space-evenly;border-radius: 22px; padding: 8px; background-image: url('images/pattern.png');background-size: 40% ">
+                    <div style="font-size: 16px;">Active Nodes</div>
+                    <div id="aliveDiv" style="font-size: 33px;">0</div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div style=" line-height: 24px; font-size: 24px; margin-top: 33px;">
+            Peer hBar Rank
+        </div>
+        <hr />
+
+
+    </div>
+
+
+</div>
+<script src="/home.js"></script>
+
+
+{/}
+{/}

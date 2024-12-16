@@ -1,0 +1,38 @@
+{#include base}
+{#sub-title}{/sub-title}
+{#body}
+
+{! variables !}
+
+<div class="container">
+  <h1>Confirmation</h1>
+  <div class="col s12">Thank you for registering the following devices</div>
+
+  {! hmmmm, maybe we should use div and row/col? !}
+  <table class="highlight">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Service</th>
+        <th>Transaction ID</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Bob</td>
+        <td>ADSB</td>
+        {! we need to ask @nik about what we need to display and link here !}
+        <td><a href"https://hashscan.io/mainnet/transaction/1707507913.438835003" target="_blank">1707507901.214000000</a></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="col s12">You can review the status of your devices and services in the device manager and in the explorer</div>
+
+  <div class="col s12">
+    <a class="btn waves-effect waves-light" href="/devicemanager">OK</a>
+  </div>
+</div>
+<script src="/confirmation.js"></script>
+{/}
+{/}

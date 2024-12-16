@@ -1,0 +1,20 @@
+# Default ignored files
+/shelf/
+/.idea/workspace.xml
+# Editor-based HTTP Client requests
+/httpRequests/
+# Datasource local storage ignored files
+/dataSources/
+/dataSources.local.xml
+# Zeppelin ignored files
+/ZeppelinRemoteNotebooks/
+.vscode/settings.json
+/target/
+.vscode/launch.json
+src/main/helm/enable-frontend.yaml
+personal
+src/main/resources/META-INF/resources/.DS_Store
+src/.DS_Store
+/personal-folder/
+/.idea/
+**/.DS_Store

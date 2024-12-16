@@ -1,0 +1,38 @@
+{#include base}
+{#sub-title}{/sub-title}
+{#body}
+
+  <!-- Your content here -->
+  <div class="container">
+    <h1>Device Role</h1>
+    <p>Please select a role for your device. Select "Service Provider" if the device is providing services, or "Consumer" if the device will be consuming services.</p>
+
+    <div class="row">
+      <div class="col s6">
+        <a href="deviceselector/provider">
+          <h5>Service Provider</h5>
+          <p>Select this option if your device is providing a service. E.g. an ADS-B flight tracking service</p>
+        </a>
+      </div>
+      <div class="col s6">
+        <a href="deviceselector/consumer">
+          <h5>Consumer</h5>
+          <p>Select this option if your device is consuming services from the Neuron network</p>
+        </a>
+      </div>
+    </div>
+    <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
+      <form action="">
+        <button class="mdc-button mdc-button--outlined" style="background-color: #183a91;"  type="submit" name="action" >
+          <span class="mdc-button__ripple"></span>
+          <span class="mdc-button__label">Back</span>
+        </button>
+      </form>
+    </div>
+    <div class="col s12">
+      <a href="" class="btn-flat waves-effect waves-teal">Back</a>
+    </div>
+  </div>
+  <script src="/devicerole.js"></script>
+{/}
+{/}
